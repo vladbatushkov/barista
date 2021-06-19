@@ -1,0 +1,43 @@
+{
+  "name": "barista",
+  "version": "1.0.0",
+  "description": "Brew Neo4j graph from your client-side codebase using madge",
+  "main": "./src/index.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@typescript-eslint/eslint-plugin": "^4.9.1",
+    "@typescript-eslint/parser": "^4.9.1",
+    "eslint": "^7.15.0",
+    "eslint-config-agoda": "^3.5.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.4"
+  },
+  "scripts": {
+    "build": "tsc",
+    "barista": "tsc && node dist/index.js",
+    "test": "jest",
+    "lint": "eslint --ext .ts --ignore-path .gitignore ./src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladbatushkov/barista.git"
+  },
+  "keywords": [
+    "ts",
+    "neo4j",
+    "madge"
+  ],
+  "author": "Vlad Batushkov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vladbatushkov/barista/issues"
+  },
+  "homepage": "https://github.com/vladbatushkov/barista#readme"
+}
