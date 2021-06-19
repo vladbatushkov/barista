@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "barista": "tsc && node dist/index.js",
+    "barista": "tsc && node ./dist/index.js",
     "test": "jest",
     "lint": "eslint --ext .ts --ignore-path .gitignore ./src/"
   },
