@@ -1,7 +1,17 @@
-import hello from './index';
+import main from './index';
 
-describe('test hello function', () => {
-    it('should say hello', () => {
-        expect(hello('Barista')).toBe('Hello, Barista!');
+jest.mock('./configProvider', () => ({
+    get() {
+        return {
+            src: 'path'
+        };
+    }
+}));
+
+describe('test main', () => {
+    it('should log config src', () => {
+        jest.spyOn(console, 'log').mockImplementation();
+        main();
+        expect(console.log).toHaveBeenCalledWith('src: \'path\'');
     });
 });

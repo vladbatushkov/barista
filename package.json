@@ -21,8 +21,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "barista": "tsc && node ./dist/index.js",
-    "test": "jest",
+    "barista": "tsc && node -e \"var main = require('./dist/index.js'); console.log(main.default());\"",
+    "test": "jest --config ./jest.config.js",
     "lint": "eslint --ext .ts --ignore-path .gitignore ./src/"
   },
   "repository": {

@@ -6,7 +6,7 @@ Brew Neo4j graph from your client-side codebase using madge
 ###### Repository is under development !!!
 ###### Not ready to use !!!
 
-![barista-logo](./barista-logo.png)
+![barista-logo](/docs/img/barista-logo.png)
 
 ## Build and Run
 
@@ -25,7 +25,7 @@ Brew Neo4j graph from your client-side codebase using madge
   - `Folder` - `IN` -> `Folder`
   - `File` - `FROM` -> `Folder`
   - `File` - `DEPENDS_ON` -> `File`
-![schema](./schema.png)
+![schema](/docs/img/schema.png)
 
 ## Cypher
 

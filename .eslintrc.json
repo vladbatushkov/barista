@@ -8,5 +8,7 @@
     "plugin:jest/recommended",
     "agoda"
   ],
-  "rules": {}
+  "rules": {
+    "no-console": "off"
+  }
 }
