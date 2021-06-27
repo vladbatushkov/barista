@@ -26,7 +26,8 @@
     "build": "tsc",
     "barista": "tsc && node -e \"var main = require('./dist/index.js'); console.log(main.default());\"",
     "test": "jest --config ./jest.config.js",
-    "lint": "eslint --ext .ts --ignore-path .gitignore ./src/"
+    "lint": "eslint --ext .ts --ignore-path .gitignore ./src/",
+    "prepare": "husky install"
   },
   "husky": {},
   "repository": {
