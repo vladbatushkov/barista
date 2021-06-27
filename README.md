@@ -1,5 +1,7 @@
 # Barista
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 Brew Neo4j graph from your client-side codebase using madge
 
 ###### Project is in Pre-Alpha phase !!!
