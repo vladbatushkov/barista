@@ -5,6 +5,8 @@
   "main": "./src/index.ts",
   "dependencies": {},
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.9.1",
     "@typescript-eslint/parser": "^4.9.1",
@@ -15,6 +17,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^6.0.0",
     "jest": "^27.0.4",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.4"
@@ -25,6 +28,7 @@
     "test": "jest --config ./jest.config.js",
     "lint": "eslint --ext .ts --ignore-path .gitignore ./src/"
   },
+  "husky": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vladbatushkov/barista.git"
