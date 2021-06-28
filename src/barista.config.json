@@ -1,6 +1,6 @@
 {
-    "src": "C:\\src\\github\\barista\\src",
-    "madge": {
-        "filter": ""
+    "scan": {
+        "src": "/Users/vladbatushkov/Documents/src/github/barista/",
+        "regex": "/**/*entry*.ts"
     }
 }

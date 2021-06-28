@@ -1,9 +1,14 @@
-import configProvider from './configProvider';
+import configProvider, { ScanConfig } from './configProvider';
+import fs from './fs';
+
+const processScan = (files: string[]):void => {
+    console.log(files);
+}
 
 const main = () => {
     try {
         const config = configProvider.get();
-        console.log(`src: '${config.src}'`);
+        fs.scan(config.scan, processScan);
     } catch (err) {
         console.error(err);
     }
