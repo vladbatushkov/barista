@@ -1,9 +1,9 @@
-import configProvider, { ScanConfig } from './configProvider';
+import configProvider from './configProvider';
 import fs from './fs';
 
-const processScan = (files: string[]):void => {
+const processScan = (files: string[]): void => {
     console.log(files);
-}
+};
 
 const main = () => {
     try {

@@ -4,7 +4,7 @@ jest.mock('./barista.config.json', () => (
     {
         scan: {
             src: 'path',
-            regex: "*"
+            regex: '*'
         }
     }
 ));
