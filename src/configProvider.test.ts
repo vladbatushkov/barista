@@ -2,12 +2,18 @@ import configProvider from './configProvider';
 
 jest.mock('./barista.config.json', () => (
     {
-        src: 'path'
+        scan: {
+            src: 'path',
+            regex: '*'
+        }
     }
 ));
 
 describe('test get function', () => {
-    it('should return path', () => {
-        expect(configProvider.get().src).toBe('path');
+    it('src should return path', () => {
+        expect(configProvider.get().scan.src).toBe('path');
+    });
+    it('regex should return *', () => {
+        expect(configProvider.get().scan.regex).toBe('*');
     });
 });
