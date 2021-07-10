@@ -4,7 +4,8 @@
   "description": "Brew Neo4j graph from your client-side codebase using madge",
   "main": "./src/index.ts",
   "dependencies": {
-    "glob": "^7.1.7"
+    "glob": "^7.1.7",
+    "madge": "^5.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

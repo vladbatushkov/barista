@@ -1,6 +1,10 @@
 {
     "scan": {
         "src": "/Users/vladbatushkov/Documents/src/github/barista/",
-        "regex": "/**/*entry*.ts"
+        "regex": "/**/js/index.js"
+    },
+    "madge":{
+        "exclude": "^.*(snap|json)",
+        "dest": "dist"
     }
 }

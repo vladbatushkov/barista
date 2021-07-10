@@ -1,18 +1,25 @@
-import configProvider from './configProvider';
+import { getConfig, MadgeConfig } from './configProvider';
 import fs from './fs';
+import ms from './madge';
 
-const processScan = (files: string[]): void => {
-    console.log(files);
+const madgeCalback = (file: string) => {
+    console.log(`madge complete ${file}`);
+};
+
+const scanCallback = (mcfg: MadgeConfig, entries: string[]): void => {
+    entries.forEach((entry) => {
+        ms.madge(mcfg, entry, madgeCalback);
+    });
 };
 
 const main = () => {
     try {
-        const config = configProvider.get();
-        fs.scan(config.scan, processScan);
+        const config = getConfig();
+        fs.scan(config.scan, es => scanCallback(config.madge, es));
     } catch (err) {
         console.error(err);
     }
-    return 'Hasta la vista, Barista';
+    return 'Barista brewing...';
 };
 
 export default main;
