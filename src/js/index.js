@@ -1,44 +1,47 @@
-const { execSync } = require("child_process");
-const { scan, read, write } = require("./fs.js");
-const { exec, cmdDependsOn, cmdFrom, cmdIn } = require("./neo.js");
+const { execSync } = require('child_process');
+const { scan, read, write } = require('./fs.js');
+const {
+    exec, cmdDependsOn, cmdFrom, cmdIn
+} = require('./neo.js');
+const { ext } = require('./utils.js');
 
-const filter = (file) => (file.indexOf('.ts') == (file.length - 3)
+const filter = file => (file.indexOf(ext) == (file.length - 3)
     && file.indexOf('entry') > -1);
 
 const callback = (err, entries) => {
     if (err) throw err;
 
-    let sources = {};
+    const sources = {};
     entries = entries.flat();
-    console.log("List of entries to analyze:");
+    console.log('List of entries to analyze:');
     console.log(entries);
 
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
         const chunks = entry.split('\\').reverse();
         const key = chunks[1];
         const file = `${key}.${chunks[0].replace('.ts', '')}.txt`;
         processEntry(sources, key, file, entry);
     });
-    //write('./sources.json', JSON.stringify(sources));
+    // write('./sources.json', JSON.stringify(sources));
     processSource(sources);
 };
 
 main = () => {
     console.log("Scan for 'entry' files...");
-    scan(filter, "C:\\src\\agoda-front-end\\agoda-com-dictator\\Src\\Agoda.Website\\Agoda.Website.ClientSide\\src", callback);
+    scan(filter, 'C:\\src\\agoda-front-end\\agoda-com-dictator\\Src\\Agoda.Website\\Agoda.Website.ClientSide\\src', callback);
 };
 
 processEntry = (s, key, file, entry) => {
     console.log(`\n\nExecute madge on entry: ${entry}\n`);
-    //execSync(`madge --exclude \"^.*(snap|json)\" ${entry} > source/${file}`, { encoding: "utf-8" });
+    // execSync(`madge --exclude \"^.*(snap|json)\" ${entry} > source/${file}`, { encoding: "utf-8" });
     let root = '';
     let isPush = false;
     read(`./source/${file}`, (x) => {
         if (x.trim() == '' || x.indexOf('Processed') > -1) return;
-        x = x.indexOf("  ") > -1 ? x.replace("  ", ',') : x;
+        x = x.indexOf('  ') > -1 ? x.replace('  ', ',') : x;
         const isRoot = x.indexOf(',') == -1;
-        const isInternal = x.indexOf("..") == -1;
-        x = key == "src" ? x : (isInternal ? (isRoot ? `${key}/${x}` : `,${key}/${x.replace(',', '')}`) : x);
+        const isInternal = x.indexOf('..') == -1;
+        x = key == 'src' ? x : (isInternal ? (isRoot ? `${key}/${x}` : `,${key}/${x.replace(',', '')}`) : x);
         x = isInternal ? x : x.replace(/(\.\.\/)/g, '');
 
         if (isRoot) {
@@ -55,11 +58,10 @@ processEntry = (s, key, file, entry) => {
 };
 
 processSource = (obj) => {
-
     console.log('\nDestroying existed data in graph...');
-    exec(["MATCH (n) DETACH DELETE n;"]);
+    exec(['MATCH (n) DETACH DELETE n;']);
 
-    const cmds = Object.keys(obj).map(keyObj => {
+    const cmds = Object.keys(obj).map((keyObj) => {
         const items = obj[keyObj];
         return items.map(x => mutate(x));
     }).flat().flat();
@@ -71,7 +73,7 @@ processSource = (obj) => {
 let thisFile = '';
 
 mutate = (line) => {
-    let result = [];
+    const result = [];
     const arr = line.split(',');
     if (arr.length == 1) {
         thisFile = arr[0];

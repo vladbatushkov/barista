@@ -14,17 +14,19 @@ jest.mock('glob', () => ({
 }));
 
 describe('test scan function', () => {
-    it('should execute callback', () => {
+    it('should execute callback', async () => {
         const scfg: ScanConfig = {
             src: ['path'],
             regex: ['*']
         };
-        const mockCallback = jest.fn((files: string[]) => {
-            expect(files[0]).toBe('path1');
-            expect(files[1]).toBe('path2');
-        });
-        fs.scan(scfg, mockCallback);
+        // const mockCallback = jest.fn((files: string[]) => {
+        //     expect(files[0]).toBe('path1');
+        //     expect(files[1]).toBe('path2');
+        // });
+        const files = await fs.scan(scfg);
+        expect(files[0]).toBe('path1');
+        expect(files[1]).toBe('path2');
         expect(mockGlob.mock.calls[0][0]).toBe(path.join('path', '*'));
-        expect(mockCallback.mock.calls).toHaveLength(1);
+        // expect(mockCallback.mock.calls).toHaveLength(1);
     });
 });

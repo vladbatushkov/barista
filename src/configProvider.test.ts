@@ -2,15 +2,15 @@ import { getConfig } from './configProvider';
 
 jest.mock('./barista.config.json', () => (
     {
-        neo4j: {
+        graph: {
             host: 'neo4j://localhost:7687',
             login: 'user',
             password: 'test',
             database: 'db'
         },
         madge: {
-            exclude: '**',
-            dest: ['.', 'destFolder']
+            dest: ['.', 'destFolder'],
+            select: '*'
         },
         scan: {
             src: ['.', 'path'],
@@ -20,20 +20,23 @@ jest.mock('./barista.config.json', () => (
 ));
 
 describe('test get function', () => {
-    it('neo4j.host should return neo4j://localhost:7687', () => {
-        expect(getConfig().neo4j.host).toBe('neo4j://localhost:7687');
+    it('graph.host should return neo4j://localhost:7687', () => {
+        expect(getConfig().graph.host).toBe('neo4j://localhost:7687');
     });
-    it('neo4j.login should return user', () => {
-        expect(getConfig().neo4j.login).toBe('user');
+    it('graph.login should return user', () => {
+        expect(getConfig().graph.login).toBe('user');
     });
-    it('neo4j.password should return test', () => {
-        expect(getConfig().neo4j.password).toBe('test');
+    it('graph.password should return test', () => {
+        expect(getConfig().graph.password).toBe('test');
     });
-    it('neo4j.database should return db', () => {
-        expect(getConfig().neo4j.database).toBe('db');
+    it('graph.database should return db', () => {
+        expect(getConfig().graph.database).toBe('db');
     });
     it('madge.dest should return ./destFolder', () => {
         expect(getConfig().madge.dest).toStrictEqual(['.', 'destFolder']);
+    });
+    it('madge.select should return *', () => {
+        expect(getConfig().madge.select).toStrictEqual('*');
     });
     it('scan.src should return ./path', () => {
         expect(getConfig().scan.src).toStrictEqual(['.', 'path']);

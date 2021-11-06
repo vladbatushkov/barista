@@ -1,6 +1,6 @@
 import configProviderObject from './barista.config.json';
 
-export interface Neo4jConfig {
+export interface GraphConfig {
     host: string;
     login: string;
     password: string;
@@ -9,6 +9,7 @@ export interface Neo4jConfig {
 
 export interface MadgeConfig {
     dest: string[];
+    select: string;
 }
 
 export interface ScanConfig {
@@ -17,7 +18,7 @@ export interface ScanConfig {
 }
 
 export interface BaristaConfig {
-    neo4j: Neo4jConfig;
+    graph: GraphConfig;
     madge: MadgeConfig;
     scan: ScanConfig;
 }

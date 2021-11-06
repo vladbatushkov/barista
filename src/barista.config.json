@@ -1,6 +1,11 @@
 {
-    "neo4j": {
-        "host": "neo4j://locolhost:7687",
+    "workflow": {
+        "scan": true,
+        "madge": true,
+        "graph": true
+    },
+    "graph": {
+        "host": "neo4j://localhost:7687",
         "login": "neo4j",
         "password": "barista",
         "database": "neo4j"
@@ -8,7 +13,8 @@
     "madge": {
         "dest": [
             "dist"
-        ]
+        ],
+        "select": ""
     },
     "scan": {
         "src": [
@@ -16,12 +22,11 @@
             "src",
             "github",
             "barista",
-            "src"
+            "src",
+            "js"
         ],
         "regex": [
-            "**",
-            "js",
-            "index.js"
+            "*.js"
         ]
     }
 }

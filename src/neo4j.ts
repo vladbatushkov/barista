@@ -1,49 +1,68 @@
 import {
     driver, auth, session, Driver
 } from 'neo4j-driver';
-import { Neo4jConfig } from './configProvider';
+import { GraphConfig } from './configProvider';
 
 interface INeo4jProvider {
-    batch(): void;
-    close(): void;
+    batch(cmds: string[]): Promise<void>;
+    clearDb(): Promise<void>;
+    close(): Promise<void>;
 }
 
 class Neo4jProvider implements INeo4jProvider {
-    private readonly config: Neo4jConfig;
+    private readonly config: GraphConfig;
 
     private readonly driver: Driver;
 
-    constructor(neocfg: Neo4jConfig) {
-        this.config = neocfg;
+    constructor(gcfg: GraphConfig) {
+        this.config = gcfg;
         this.driver = driver(
-            neocfg.host,
-            auth.basic(neocfg.login, neocfg.password)
+            gcfg.host,
+            auth.basic(gcfg.login, gcfg.password)
         );
     }
 
-    batch(): void {
+    async batch(cmds: string[]): Promise<void> {
         const dbSession = this.driver.session({
             database: this.config.database,
             defaultAccessMode: session.WRITE
         });
 
-        const readTxResultPromise = dbSession.readTransaction((txc) => {
-            const result = txc.run('CMD');
-            return result;
+        const readTxResultPromise = dbSession.writeTransaction((txc) => {
+            const results = [];
+            cmds.forEach((cmd) => {
+                results.push(txc.run(cmd));
+            });
+
+            return results;
         });
 
-        readTxResultPromise
-            .then((result) => {
-                console.log(result.records);
-            })
-            .catch((error) => {
-                console.log(error);
+        return readTxResultPromise
+            .then()
+            .catch((err) => {
+                console.error(err);
+                throw err;
             })
             .then(() => dbSession.close());
     }
 
-    close(): void {
-        this.driver.close();
+    async clearDb(): Promise<void> {
+        const dbSession = this.driver.session({
+            database: this.config.database,
+            defaultAccessMode: session.WRITE
+        });
+
+        return dbSession
+            .run('MATCH (n) DETACH DELETE n')
+            .catch((err) => {
+                console.error(err);
+                throw err;
+            })
+            .then(() => dbSession.close());
+    }
+
+    async close(): Promise<void> {
+        return this.driver.close();
     }
 }
 

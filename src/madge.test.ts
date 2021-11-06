@@ -15,26 +15,27 @@ jest.mock('child_process', () => ({
 }));
 
 describe('test madge function', () => {
-    it('should execute callback', () => {
+    it('should call exec', async () => {
         const mcfg: MadgeConfig = {
-            dest: ['./destFolder/']
+            dest: ['./destFolder/'],
+            select: '*'
         };
-        const mockCallback = jest.fn();
+        // const mockCallback = jest.fn();
         const pathIn = path.join('src', 'folder', 'entry.ts');
         const pathOut = path.join('destFolder', 'folder.entry.txt');
-        ms.madge(mcfg, pathIn, mockCallback);
+        await ms.madge(mcfg, pathIn);
         expect(mockExec.mock.calls[0][0]).toBe(`madge ${pathIn} > ${pathOut}`);
-        expect(mockCallback.mock.calls).toHaveLength(1);
+        // expect(mockCallback.mock.calls).toHaveLength(1);
     });
 });
 
 describe('test getFile function', () => {
     it('should return expected first filename', () => {
         const result = ms.getFile(path.join('src', 'first.entry.ts'));
-        expect(result).toBe('src.first.entry.txt');
+        expect(result.file).toBe('src.first.entry.txt');
     });
     it('should return expected second filename', () => {
         const result = ms.getFile(path.join('src', 'page', 'second.entry.ts'));
-        expect(result).toBe('page.second.entry.txt');
+        expect(result.file).toBe('page.second.entry.txt');
     });
 });
