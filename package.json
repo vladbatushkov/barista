@@ -5,7 +5,8 @@
   "main": "./src/index.ts",
   "dependencies": {
     "glob": "^7.1.7",
-    "madge": "^5.0.1"
+    "madge": "^5.0.1",
+    "neo4j-driver": "^4.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

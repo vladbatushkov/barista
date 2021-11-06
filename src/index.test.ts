@@ -2,13 +2,18 @@ import { BaristaConfig, ScanConfig, MadgeConfig } from './configProvider';
 import main from './index';
 
 const mockBaristaConfig: BaristaConfig = {
+    neo4j: {
+        host: 'heo4j://localhost:7687',
+        login: 'neo4j',
+        password: 'test',
+        database: 'neo4j'
+    },
     scan: {
-        src: 'path',
-        regex: '*'
+        src: ['path'],
+        regex: ['*']
     },
     madge: {
-        exclude: '*',
-        dest: 'destFolder'
+        dest: ['destFolder']
     }
 };
 

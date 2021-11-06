@@ -17,22 +17,13 @@ jest.mock('child_process', () => ({
 describe('test madge function', () => {
     it('should execute callback', () => {
         const mcfg: MadgeConfig = {
-            exclude: '***',
-            dest: './destFolder/'
+            dest: ['./destFolder/']
         };
         const mockCallback = jest.fn();
-        ms.madge(mcfg, path.join('src', 'folder', 'entry.ts'), mockCallback);
-        expect(mockExec.mock.calls[0][0]).toBe('madge --exclude \'***\' src/folder/entry.ts > destFolder/folder.entry.txt');
-        expect(mockCallback.mock.calls).toHaveLength(1);
-    });
-    it('should execute callback without exclude', () => {
-        const mcfg: MadgeConfig = {
-            exclude: '',
-            dest: './destFolder/'
-        };
-        const mockCallback = jest.fn();
-        ms.madge(mcfg, path.join('src', 'folder', 'entry.ts'), mockCallback);
-        expect(mockExec.mock.calls[1][0]).toBe('madge src/folder/entry.ts > destFolder/folder.entry.txt');
+        const pathIn = path.join('src', 'folder', 'entry.ts');
+        const pathOut = path.join('destFolder', 'folder.entry.txt');
+        ms.madge(mcfg, pathIn, mockCallback);
+        expect(mockExec.mock.calls[0][0]).toBe(`madge ${pathIn} > ${pathOut}`);
         expect(mockCallback.mock.calls).toHaveLength(1);
     });
 });
