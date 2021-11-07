@@ -7,19 +7,14 @@ export interface GraphConfig {
     database: string;
 }
 
-export interface MadgeConfig {
-    dest: string[];
-    select: string;
-}
-
 export interface ScanConfig {
-    src: string[];
-    regex: string[];
+    regex: string;
+    source: string[];
+    dest: string[];
 }
 
 export interface BaristaConfig {
     graph: GraphConfig;
-    madge: MadgeConfig;
     scan: ScanConfig;
 }
 

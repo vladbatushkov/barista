@@ -15,15 +15,17 @@ const mutate = (initFile: string, line: string): Record<string, string[]> => {
     const arr = line.split(',');
     if (arr.length === 1) {
         [thisFile] = arr;
-        const chunks = thisFile.split('/');
+        const chunks = thisFile.indexOf('/') > -1 ? thisFile.split('/') : thisFile.split('\\');
         let i = 1;
+        let thatFolder = '';
         while (i < chunks.length - 1) {
             const thisFolder = chunks.slice(0, i + 1).join('/');
-            const thatFolder = chunks.slice(0, i).join('/');
+            thatFolder = chunks.slice(0, i).join('/');
             result.push(cmdIn({ thisFolder, thatFolder }));
             i += 1;
         }
-        const thatFolder = chunks.slice(0, chunks.length - 1).join('/');
+        thatFolder = chunks.slice(0, chunks.length - 1).join('/');
+        thatFolder = thatFolder === '' ? 'root' : thatFolder;
         result.push(cmdFrom({ thisFile, thatFolder }));
         return { arr: result, next: [thisFile] };
     }

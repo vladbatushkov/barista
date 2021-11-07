@@ -3,7 +3,7 @@ const { scan, read, write } = require('./fs.js');
 const {
     exec, cmdDependsOn, cmdFrom, cmdIn
 } = require('./neo.js');
-const { ext } = require('./utils.js');
+const { ext } = require('./common/utils.js');
 
 const filter = file => (file.indexOf(ext) == (file.length - 3)
     && file.indexOf('entry') > -1);

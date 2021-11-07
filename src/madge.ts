@@ -1,34 +1,39 @@
 import path from 'path';
 import { exec, ExecException } from 'child_process';
-import { MadgeConfig } from './configProvider';
 
-const getFile = (entry: string): Record<string, string> => {
-    const dir = path.basename(path.dirname(entry));
-    const name = path.basename(entry).replace(path.extname(entry), '');
+export type EntryModel = {
+    key: string;
+    fileIn: string;
+    fileOut: string;
+}
+
+const createEntryModel = (pathIn: string, pathOut: string[]): EntryModel => {
+    const key = path.basename(path.dirname(pathIn));
+    const name = path.basename(pathIn).replace(path.extname(pathIn), '');
+    const fullname = `${key}.${name}.dds`;
+    const fileOut = path.join(...pathOut, fullname);
     return {
-        key: dir,
-        file: `${dir}.${name}.txt`
-    };
+        key,
+        fileIn: pathIn,
+        fileOut
+    } as EntryModel;
 };
 
-const madge = (mcfg: MadgeConfig, entry: string): Promise<Record<string, string>> =>
-    new Promise<Record<string, string>>(
+const madge = (obj: EntryModel): Promise<void> =>
+    new Promise<void>(
         (resolve, reject) => {
-            const obj = getFile(entry);
-            const dest = path.join(...mcfg.dest, obj.file);
-            obj.dest = dest;
             exec(
-                `madge ${entry} > ${dest}`,
+                `madge ${obj.fileIn} > ${obj.fileOut}`,
                 { encoding: 'utf-8' },
                 (error: ExecException) => {
                     if (error) {
                         reject(error);
                     }
-                    console.log(`Madge completed with output file: ${dest}`);
-                    resolve(obj);
+                    console.log(`Madge completed with output file: ${obj.fileOut}`);
+                    resolve();
                 }
             );
         }
     );
 
-export default { madge, getFile };
+export default { madge, createEntryModel };

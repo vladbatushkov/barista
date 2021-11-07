@@ -1,32 +1,25 @@
 {
-    "workflow": {
-        "scan": true,
-        "madge": true,
-        "graph": true
-    },
     "graph": {
         "host": "neo4j://localhost:7687",
         "login": "neo4j",
         "password": "barista",
         "database": "neo4j"
     },
-    "madge": {
-        "dest": [
-            "dist"
-        ],
-        "select": ""
-    },
     "scan": {
-        "src": [
+        "regex": "**/index.js",
+        "source": [
             "C:",
             "src",
             "github",
             "barista",
-            "src",
-            "js"
+            "src"
         ],
-        "regex": [
-            "*.js"
+        "dest": [
+            "C:",
+            "src",
+            "github",
+            "barista",
+            "dist"
         ]
     }
 }

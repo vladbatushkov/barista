@@ -1,10 +1,10 @@
 import { glob } from 'glob';
 import path from 'path';
 import fs from 'fs';
-import { ScanConfig, MadgeConfig } from './configProvider';
+import { EntryModel } from './madge';
 
-const scan = (scfg: ScanConfig): Promise<string[]> => new Promise((resolve, reject) => {
-    const pattern = path.join(...[...scfg.src, ...scfg.regex]);
+const scan = (dir: string[], regex: string): Promise<string[]> => new Promise((resolve, reject) => {
+    const pattern = path.join(...[...dir, regex]);
     glob(pattern, {}, (err, files) => {
         if (err) {
             reject(err);
@@ -13,10 +13,10 @@ const scan = (scfg: ScanConfig): Promise<string[]> => new Promise((resolve, reje
     });
 });
 
-const mergeFromFile = (result: Record<string, string[]>, obj: Record<string, string>): void => {
+const mergeFromFile = (result: Record<string, string[]>, obj: EntryModel): void => {
     let root = '';
     let isPush = false;
-    fs.readFileSync(obj.dest, 'utf-8').split(/\r?\n/).forEach((line) => {
+    fs.readFileSync(obj.fileOut, 'utf-8').split(/\r?\n/).forEach((line) => {
         if (line.trim() === '' || line.indexOf('Processed') > -1) return;
         const x = line.indexOf('  ') > -1 ? line.replace('  ', ',') : line;
         const isRoot = x.indexOf(',') === -1;
@@ -40,14 +40,12 @@ const mergeFromFile = (result: Record<string, string[]>, obj: Record<string, str
     });
 };
 
-const merge = (objs: Record<string, string>[], mcfg: MadgeConfig): Record<string, string[]> => {
-    const regex = new RegExp(mcfg.select);
+const transform = (objs: EntryModel[]): Record<string, string[]> => {
     const result = {} as Record<string, string[]>;
-    objs.filter(x => mcfg.select === '' || regex.test(x.dest))
-        .forEach((obj) => {
-            mergeFromFile(result, obj);
-        });
+    objs.forEach((obj) => {
+        mergeFromFile(result, obj);
+    });
     return { ...result };
 };
 
-export default { scan, merge };
+export default { scan, transform };
