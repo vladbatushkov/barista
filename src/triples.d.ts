@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 export declare class FileDepOnFile {
     thisFile: string;
 
