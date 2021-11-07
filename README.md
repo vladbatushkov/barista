@@ -2,13 +2,11 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-Brew Neo4j graph from your client-side codebase using madge
-
-###### Project is in Pre-Alpha phase !!!
-###### Repository is under development !!!
-###### Not ready to use !!!
-
 ![barista-logo](/docs/img/barista-logo.png)
+
+Barista helps you to create a Client-side Dependency Graph using Neo4j database and Madge.
+
+![image](https://user-images.githubusercontent.com/6023235/140647437-54c8f8bc-9d5e-4ef8-9b7a-1982d2066c7c.png)
 
 ## Build and Run
 
