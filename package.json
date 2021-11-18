@@ -1,7 +1,7 @@
 {
   "name": "barista",
-  "version": "1.0.0",
-  "description": "Brew Neo4j graph from your client-side codebase using madge",
+  "version": "0.1.0",
+  "description": "Brew a graph of your client-side codebase using Madge & Neo4j",
   "main": "./src/index.ts",
   "dependencies": {
     "glob": "^7.1.7",
