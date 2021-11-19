@@ -1,18 +1,21 @@
 import configProviderObject from './barista.config.json';
 
-export interface ScanConfig {
-    src: string;
-    regex: string;
+export interface GraphConfig {
+    host: string;
+    login: string;
+    password: string;
+    database: string;
 }
 
-export interface MadgeConfig {
-    exclude: string;
-    dest: string;
+export interface ScanConfig {
+    regex: string;
+    source: string[];
+    dest: string[];
 }
 
 export interface BaristaConfig {
+    graph: GraphConfig;
     scan: ScanConfig;
-    madge: MadgeConfig;
 }
 
 const getConfig = (): BaristaConfig => configProviderObject;

@@ -1,18 +1,19 @@
 const fs = require('fs');
 const path = require('path');
-const readline = require('readline')
+const readline = require('readline');
+const { encode } = require('./common/utils.js');
 
 const scan = (filter, dir, done) => {
-    var results = [];
-    fs.readdir(dir, function (err, list) {
+    let results = [];
+    fs.readdir(dir, (err, list) => {
         if (err) return done(err);
-        var pending = list.length;
+        let pending = list.length;
         if (!pending) return done(null, results);
-        list.forEach(function (file) {
+        list.forEach((file) => {
             file = path.resolve(dir, file);
-            fs.stat(file, function (err, stat) {
+            fs.stat(file, (err, stat) => {
                 if (stat && stat.isDirectory()) {
-                    scan(filter, file, function (err, res) {
+                    scan(filter, file, (err, res) => {
                         results = results.concat(res);
                         if (!--pending) done(null, results);
                     });
@@ -26,16 +27,15 @@ const scan = (filter, dir, done) => {
 };
 
 const read = (path, callback) => {
-    fs.readFileSync(path, 'utf-8').split(/\r?\n/).forEach(function (line) {
+    fs.readFileSync(path, encode).split(/\r?\n/).forEach((line) => {
         callback(line);
     });
 };
 
 const write = (path, content) => {
-    fs.writeFile(path, content, err => {
+    fs.writeFile(path, content, (err) => {
         if (err) {
             console.error(err);
-            return;
         }
     });
 };

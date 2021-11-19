@@ -1,5 +1,5 @@
 import G from 'glob';
-import { ScanConfig } from './configProvider';
+import path from 'path';
 import fs from './fs';
 
 const mockGlob = jest.fn((pattern: string, options: G.IOptions, cb: (err: Error | null, matches: string[]) => void) => {
@@ -13,17 +13,15 @@ jest.mock('glob', () => ({
 }));
 
 describe('test scan function', () => {
-    it('should execute callback', () => {
-        const scfg: ScanConfig = {
-            src: 'path',
-            regex: '*'
-        };
-        const mockCallback = jest.fn((files: string[]) => {
-            expect(files[0]).toBe('path1');
-            expect(files[1]).toBe('path2');
-        });
-        fs.scan(scfg, mockCallback);
-        expect(mockGlob.mock.calls[0][0]).toBe('path*');
-        expect(mockCallback.mock.calls).toHaveLength(1);
+    it('should execute callback', async () => {
+        // const mockCallback = jest.fn((files: string[]) => {
+        //     expect(files[0]).toBe('path1');
+        //     expect(files[1]).toBe('path2');
+        // });
+        const files = await fs.scan(['path'], '*');
+        expect(files[0]).toBe('path1');
+        expect(files[1]).toBe('path2');
+        expect(mockGlob.mock.calls[0][0]).toBe(path.join('path', '*'));
+        // expect(mockCallback.mock.calls).toHaveLength(1);
     });
 });

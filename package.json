@@ -1,11 +1,12 @@
 {
   "name": "barista",
-  "version": "1.0.0",
-  "description": "Brew Neo4j graph from your client-side codebase using madge",
+  "version": "0.1.0",
+  "description": "Brew a graph of your client-side codebase using Madge & Neo4j",
   "main": "./src/index.ts",
   "dependencies": {
     "glob": "^7.1.7",
-    "madge": "^5.0.1"
+    "madge": "^5.0.1",
+    "neo4j-driver": "^4.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
@@ -24,7 +25,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "barista": "tsc && node -e \"var main = require('./dist/index.js'); console.log(main.default());\"",
+    "barista": "tsc && node -e \"var main = require('./dist/index.js'); main.default().then(() => { process.exit(); });\"",
     "test": "jest --config ./jest.config.js",
     "lint": "eslint --ext .ts --ignore-path .gitignore ./src/",
     "prepare": "husky install"

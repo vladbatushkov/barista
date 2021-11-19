@@ -1,10 +1,25 @@
 {
-    "scan": {
-        "src": "/Users/vladbatushkov/Documents/src/github/barista/",
-        "regex": "/**/js/index.js"
+    "graph": {
+        "host": "neo4j://localhost:7687",
+        "login": "neo4j",
+        "password": "barista",
+        "database": "neo4j"
     },
-    "madge":{
-        "exclude": "^.*(snap|json)",
-        "dest": "dist"
+    "scan": {
+        "regex": "**/index.js",
+        "source": [
+            "C:",
+            "src",
+            "github",
+            "barista",
+            "src"
+        ],
+        "dest": [
+            "C:",
+            "src",
+            "github",
+            "barista",
+            "dist"
+        ]
     }
 }

@@ -1,9 +1,11 @@
 import path from 'path';
 import { ExecOptions, ExecException, ChildProcess } from 'child_process';
-import { MadgeConfig } from './configProvider';
-import ms from './madge';
+import ms, { EntryModel } from './madge';
 
 const mockExec = jest.fn();
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+jest.spyOn(global.console, 'log').mockImplementation((_) => { });
 
 jest.mock('child_process', () => ({
     exec(command: string, _: {
@@ -15,35 +17,31 @@ jest.mock('child_process', () => ({
 }));
 
 describe('test madge function', () => {
-    it('should execute callback', () => {
-        const mcfg: MadgeConfig = {
-            exclude: '***',
-            dest: './destFolder/'
-        };
-        const mockCallback = jest.fn();
-        ms.madge(mcfg, path.join('src', 'folder', 'entry.ts'), mockCallback);
-        expect(mockExec.mock.calls[0][0]).toBe('madge --exclude \'***\' src/folder/entry.ts > destFolder/folder.entry.txt');
-        expect(mockCallback.mock.calls).toHaveLength(1);
-    });
-    it('should execute callback without exclude', () => {
-        const mcfg: MadgeConfig = {
-            exclude: '',
-            dest: './destFolder/'
-        };
-        const mockCallback = jest.fn();
-        ms.madge(mcfg, path.join('src', 'folder', 'entry.ts'), mockCallback);
-        expect(mockExec.mock.calls[1][0]).toBe('madge src/folder/entry.ts > destFolder/folder.entry.txt');
-        expect(mockCallback.mock.calls).toHaveLength(1);
+    it('should call exec', async () => {
+        const pathIn = path.join('src', 'folder', 'entry.ts');
+        const pathOut = path.join('destFolder', 'folder.entry.txt');
+        await ms.madge({ fileIn: pathIn, fileOut: pathOut, key: 'folder' } as EntryModel);
+        expect(mockExec.mock.calls[0][0]).toBe(`madge ${pathIn} > ${pathOut}`);
+        // expect(mockCallback.mock.calls).toHaveLength(1);
     });
 });
 
 describe('test getFile function', () => {
     it('should return expected first filename', () => {
-        const result = ms.getFile(path.join('src', 'first.entry.ts'));
-        expect(result).toBe('src.first.entry.txt');
+        const pathIn = path.join('src', 'first.entry.ts');
+        const result = ms.createEntryModel(pathIn, ['dest']);
+
+        expect(result.fileIn).toBe(pathIn);
+        const fileOut = path.join('dest', 'src.first.entry.dds');
+        expect(result.fileOut).toBe(fileOut);
+        expect(result.key).toBe('src');
     });
     it('should return expected second filename', () => {
-        const result = ms.getFile(path.join('src', 'page', 'second.entry.ts'));
-        expect(result).toBe('page.second.entry.txt');
+        const pathIn = path.join('src', 'page', 'second.entry.dds');
+        const result = ms.createEntryModel(pathIn, ['dest']);
+        expect(result.fileIn).toBe(pathIn);
+        const fileOut = path.join('dest', 'page.second.entry.dds');
+        expect(result.fileOut).toBe(fileOut);
+        expect(result.key).toBe('page');
     });
 });
