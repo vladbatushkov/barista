@@ -6,7 +6,7 @@
         "database": "neo4j"
     },
     "scan": {
-        "regex": "**/index.js",
+        "regex": "example/entry.ts",
         "source": [
             "C:",
             "src",
