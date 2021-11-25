@@ -1,5 +1,5 @@
 {
-  "name": "barista",
+  "name": "@vladbatushkov/barista",
   "version": "0.1.0",
   "description": "Brew a graph of your client-side codebase using Madge & Neo4j",
   "main": "./src/index.ts",
