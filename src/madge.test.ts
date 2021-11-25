@@ -22,11 +22,10 @@ describe('test madge function', () => {
         const pathOut = path.join('destFolder', 'folder.entry.txt');
         await ms.madge({ fileIn: pathIn, fileOut: pathOut, key: 'folder' } as EntryModel);
         expect(mockExec.mock.calls[0][0]).toBe(`madge ${pathIn} > ${pathOut}`);
-        // expect(mockCallback.mock.calls).toHaveLength(1);
     });
 });
 
-describe('test getFile function', () => {
+describe('test createEntryModel function', () => {
     it('should return expected first filename', () => {
         const pathIn = path.join('src', 'first.entry.ts');
         const result = ms.createEntryModel(pathIn, ['dest']);
