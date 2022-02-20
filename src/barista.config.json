@@ -1,25 +1,13 @@
 {
-    "graph": {
-        "host": "neo4j://localhost:7687",
-        "login": "neo4j",
-        "password": "barista",
-        "database": "neo4j"
-    },
-    "scan": {
-        "regex": "example/entry.ts",
-        "source": [
-            "C:",
-            "src",
-            "github",
-            "barista",
-            "src"
-        ],
-        "dest": [
-            "C:",
-            "src",
-            "github",
-            "barista",
-            "dist"
-        ]
-    }
+  "graph": {
+    "host": "neo4j://localhost:7687",
+    "login": "neo4j",
+    "password": "barista",
+    "database": "neo4j"
+  },
+  "scan": {
+    "regex": "**/*.ts",
+    "source": [".", "src", "adv-example"],
+    "dest": [".", "dist"]
+  }
 }
