@@ -6,9 +6,9 @@
 
 Brew a graph of your client-side codebase using Madge & Neo4j.
 
-Read a tutorial in article. [WIP]
+Read a [Tutorial](https://vladbatushkov.medium.com/9479c99aa3a9?source=friends_link&sk=750ffb348f0f761e1a57ff77e66c7ec0) on Medium.
 
-How it works diagram:
+How it works:
 
 ![image](https://user-images.githubusercontent.com/6023235/140647437-54c8f8bc-9d5e-4ef8-9b7a-1982d2066c7c.png)
 
