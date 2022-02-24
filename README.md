@@ -6,6 +6,10 @@
 
 Brew a graph of your client-side codebase using Madge & Neo4j.
 
+Read a [Tutorial](https://vladbatushkov.medium.com/9479c99aa3a9?source=friends_link&sk=750ffb348f0f761e1a57ff77e66c7ec0) on Medium.
+
+How it works:
+
 ![image](https://user-images.githubusercontent.com/6023235/140647437-54c8f8bc-9d5e-4ef8-9b7a-1982d2066c7c.png)
 
 ## Build and Run
@@ -22,19 +26,33 @@ Brew a graph of your client-side codebase using Madge & Neo4j.
 ## Graph Schema
 
 Nodes:
+
 - `(:Folder)`
 - `(:File)`
 
 Relationships:
+
 - `(:Folder)-[:IN]->(:Folder)`
 - `(:File)-[:FROM]->(:Folder)`
 - `(:File)-[:DEPENDS_ON]->(:File)`
 
 ![schema](/docs/img/schema.png)
 
-## Useful Queries
+## Useful Cypher Queries
 
-When Barista finish, use a graph to find useful insights.
-In **/cypher** folder we collect some cool queries for you:
-- [level-dependency.cql](./cypher/level-dependency.cql)
-  - Use `[:DEPENDS_ON*1..N]` to look deeper into nested dependencies
+**/cypher** folder contains a collection of useful queries:
+
+- Common folder consumers as folders: [common-usage-folders.cql](./cypher/common-usage-folders.cql)
+- Common folder consumers: [common-usage.cql](./cypher/common-usage.cql)
+- Detect dependencies from the outside: [strict-module-dependency.cql](./cypher/strict-module-dependency.cql)
+- Detect n-deep dependencies from the outside: [strict-module-n-deep-dependencies.cql](./cypher/strict-module-n-deep-dependencies.cql)
+- Find outside dependency for subject, and then find other consumers of same dependency: [subject-dependency-consumer.cql](./cypher/subject-dependency-consumer.cql)
+
+## Contributors are welcomed
+
+Categories to work on:
+
+- Enrich result graph with new nodes and relationships
+- Change the logic of application
+- Add more useful Cypher queries
+- Improve documentation
